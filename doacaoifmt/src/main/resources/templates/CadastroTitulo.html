@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+<head>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+    <meta charset="UTF-8">
+    <title>Cadastro de Título</title>
+	<style>
+		       .popup {
+		           display: none;
+		           position: fixed;
+		           z-index: 9;
+		           left: 50%;
+		           top: 50%;
+		           transform: translate(-50%, -50%);
+		           width: 300px;
+		           padding: 20px;
+		           border: 1px solid #888;
+		           background-color: #fff;
+		           box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+		           text-align: center;
+		       }
+		
+		       .popup.success {
+		           border-color: #4CAF50;
+		       }
+		
+		       .popup.error {
+		           border-color: #f44336;
+		       }
+		
+		       .popup .close-btn {
+		           cursor: pointer;
+		           font-size: 20px;
+		           font-weight: bold;
+		           position: absolute;
+		           top: 10px;
+		           right: 10px;
+		       }
+		   </style>
+		   <script>
+		       function showPopup(message, type) {
+		           var popup = document.getElementById("popup");
+		           var messageSpan = document.getElementById("popup-message");
+		           popup.className = "popup " + type;
+		           messageSpan.innerText = message;
+		           popup.style.display = "block";
+		       }
+		
+		       function closePopup() {
+		           var popup = document.getElementById("popup");
+		           popup.style.display = "none";
+		           window.location.href = '/titulos/novo';  // Redireciona para a página de cadastro
+		       }
+		   </script>
+</head>
+<body>
+	<nav class="navbar navbar-dark bg-success">
+	        <a class="navbar-brand d-flex align-items-center">
+	            <img src="/images/ifmtlogo.png" width="70" height="70" alt="IFMT"/>
+	            <h1 class="text-white ml-2 mb-0">Recebimento de Doações</h1>
+	        </a>
+	    </nav>
+		<div id="popup" class="popup">
+		        <span class="close-btn" onclick="closePopup()">&times;</span>
+		        <span id="popup-message"></span>
+		    </div>
+		    <div th:if="${message}">
+		        <script th:inline="javascript">
+					showPopup([[${message}]], '[[${messageType}]]');
+		        </script>
+		    </div>
+    <form action="#" th:action="@{/titulos/salvar}" th:object="${titulo}" method="post">
+        <div class="card">
+			<div class="card-header tux-titulo-panel">
+				<br>
+				<h6>Formulário para recebimento de doações de Alimentos</h6>
+				<span class= "tux-titulo-panel">Colaborador, preencha as informações abaixo:</span>
+			</div>
+			<div class="card-body">
+				<div class="form-group row">
+	            	<label for="nomedoador" class="col-sm-2 col form-label">Nome do Doador:</label>	
+					<div class="col-sm-4">
+	            		<input type="text" th:field="*{nomeDoDoador}" />
+					</div>
+				</div>
+				<div class="form-group row">
+		            <label for="descricao" class="col-sm-2 col form-label">Descrição:</label>
+					<div class="col-sm-4">
+		            	<input type="text" th:field="*{descricao}" />
+					</div>
+        		</div>
+				<div class="form-group row">
+					<label for="quantidade" class="col-sm-2 col form-label">Quantidade:</label>
+					<div class="col-sm-4">
+						<input type="number" th:field="*{quantidade}" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="data" class="col-sm-2 col form-label">Data da Doação:</label>
+					<div class="col-sm-4">
+						<input type="date" th:field="*{dataDeDoacao}" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-2 offset-md-2 col-sm-10">
+            			<button type="submit">Salvar</button>
+					</div>
+				</div>
+        	</div>
+		</div>
+    </form>
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="/js/popper.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>
